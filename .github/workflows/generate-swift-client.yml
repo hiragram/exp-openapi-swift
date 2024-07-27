@@ -1,0 +1,49 @@
+name: Generate Swift Code
+
+on:
+  workflow_dispatch:
+  push:
+    branches:
+      - main
+
+jobs:
+  generate-code:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v2
+        with:
+          submodules: true  # サブモジュールをチェックアウト
+
+      - name: Set up git user
+        run: |
+          git config --global user.name "hiragram-bot"
+          git config --global user.email "hiragram+bot@gmail.com"
+
+      - name: Update submodule to latest commit
+        run: |
+          cd openapi-repo
+          git fetch
+          git checkout main
+          git pull origin main
+          cd ..
+          git add openapi-repo
+
+      - name: Set up JDK 11
+        uses: actions/setup-java@v2
+        with:
+          java-version: '11'
+
+      - name: Download OpenAPI Generator CLI
+        run: wget https://repo1.maven.org/maven2/org/openapitools/openapi-generator-cli/5.1.1/openapi-generator-cli-5.1.1.jar -O openapi-generator-cli.jar
+
+      - name: Generate Swift Code
+        run: |
+          java -jar openapi-generator-cli.jar generate -g swift5 -i openapi-repo/openapi.yml -o generated-code
+          git add generated-code
+
+      - name: Commit and push changes
+        run: |
+          git commit -m "[Auto] Generate API client according as OpenAPI doc is updated."
+          git push
