@@ -4,20 +4,21 @@
 import PackageDescription
 
 let package = Package(
-    name: "exp-openapi-swift",
+    name: "NantokaAPI",
     products: [
         // Products define the executables and libraries a package produces, making them visible to other packages.
         .library(
-            name: "exp-openapi-swift",
-            targets: ["exp-openapi-swift"]),
+            name: "NantokaAPI",
+            targets: ["Generated"]),
     ],
     targets: [
         // Targets are the basic building blocks of a package, defining a module or a test suite.
         // Targets can depend on other targets in this package and products from dependencies.
         .target(
-            name: "exp-openapi-swift"),
+            name: "Generated"
+        ),
         .testTarget(
             name: "exp-openapi-swiftTests",
-            dependencies: ["exp-openapi-swift"]),
+            dependencies: ["Generated"]),
     ]
 )
