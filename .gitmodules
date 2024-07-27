@@ -1,0 +1,3 @@
+[submodule "openapi-repo"]
+	path = openapi-repo
+	url = git@github.com:hiragram/exp-openapi-doc.git
