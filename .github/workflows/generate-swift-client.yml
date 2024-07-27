@@ -2,6 +2,12 @@ name: Generate Swift Code
 
 on:
   workflow_dispatch:
+  push:
+    branches:
+      - main
+
+permissions:
+  contents: write  # リポジトリへの書き込み権限を付与
 
 jobs:
   generate-code:
@@ -42,6 +48,8 @@ jobs:
           git add generated-code
 
       - name: Commit and push changes
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
           git commit -m "[Auto] Generate API client according to OpenAPI doc updates."
-          git push
+          git push https://x-access-token:${GITHUB_TOKEN}@github.com/hiragram/exp-openapi-swift.git HEAD:main
