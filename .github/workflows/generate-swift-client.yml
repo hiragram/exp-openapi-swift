@@ -42,7 +42,7 @@ jobs:
       - name: Generate Swift Code
         run: |
           java -jar openapi-generator-cli.jar generate -g swift5 -i openapi-repo/openapi.yml -o Sources/Generated
-          git add Generated
+          git add Sources/Generated
 
       - name: Commit and push changes
         env:
