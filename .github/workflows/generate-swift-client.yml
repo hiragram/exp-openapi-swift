@@ -2,9 +2,6 @@ name: Generate Swift Code
 
 on:
   workflow_dispatch:
-  push:
-    branches:
-      - main
 
 permissions:
   contents: write  # リポジトリへの書き込み権限を付与
